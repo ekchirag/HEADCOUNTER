@@ -144,15 +144,17 @@ if (measure2.RangeMilliMeter<th || measure4.RangeMilliMeter<th ){
   Serial.println(F(" "));
 
 }
-void Funky1 (int a,int b,int c,int d){
+void Funky1 (int a,int b){
   if  (a<th){
     startTime1=millis();  
   }if (b<th){
     endTime1=millis();
   }
-  if  (c<th){
+}
+void Funky2 (int a,int b){
+  if  (a<th){
     startTime2=millis();  
-  }if (d<th){
+  }if (b<th){
     endTime2=millis();
   }
 }
@@ -164,29 +166,36 @@ void reset(int a,int b,int c,int d){
   else{
     resettime2=millis();
   }
-  if ((resettime2-resettime1)>3000){
+  if ((resettime2-resettime1)>750){
     startTime1 = 0; 
     endTime1 = 0;
     startTime2 = 0; 
     endTime2 = 0;
-
+    // Serial.print("reset");
   }
 }
 // count function
 void counter(){
+  Serial.print("                      ");
   long elapsedTime1 = endTime1 - startTime1;
   if(endTime1!=0 && startTime1 !=0){
   if (elapsedTime1>0){
     endTime1=0;
     startTime1=0;
     count++;
-    delay(10);
+      // Serial.print("count");
+      // Serial.print(count);
+
+    // delay(10);
   }
   if(elapsedTime1<0){
     endTime1=0;
     startTime1=0;
     count--;
-    delay(10);
+      // Serial.print("count");
+      // Serial.print(count);
+
+    // delay(10);
   }}  
     long elapsedTime2 = endTime2 - startTime2;
   if(endTime2!=0 && startTime2 !=0){
@@ -194,17 +203,26 @@ void counter(){
     endTime2=0;
     startTime2=0;
     count++;
-    delay(10);
+      // Serial.print("count");
+      // Serial.print(count);
+
+    // delay(10);
   }
   if(elapsedTime2<0){
     endTime2=0;
     startTime2=0;
     count--;
-    delay(10);
+      // Serial.print("count  :");
+      // Serial.print(count);
+
+    // delay(10);
   }}
   Serial.println("count");
-  Serial.println(count);
-
+  Serial.println("");
+  Serial.print("                      ");
+  Serial.print(count);
+  
+  Serial.println("");
 }
 void setup() {
   Serial.begin(115200);
@@ -235,7 +253,8 @@ void setup() {
 void loop() {
    
   read_dual_sensors();
-  Funky1(measure1.RangeMilliMeter,measure3.RangeMilliMeter,measure2.RangeMilliMeter,measure4.RangeMilliMeter);
+  Funky1(measure1.RangeMilliMeter,measure3.RangeMilliMeter);
+  Funky2(measure2.RangeMilliMeter,measure4.RangeMilliMeter);
   counter();
   reset(measure1.RangeMilliMeter,measure3.RangeMilliMeter,measure2.RangeMilliMeter,measure4.RangeMilliMeter);
   delay(10);
